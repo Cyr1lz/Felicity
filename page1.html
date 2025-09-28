@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>My Dearest Felicity 💖</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;500&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #ffe6f0, #fffbe6);
+  text-align: center;
+  padding: 20px;
+  overflow-x: hidden;
+  color: #4a3f41;
+}
+h1,h2,h3 { font-family: 'Dancing Script', cursive; font-weight: 700; color: #e08ab5; margin-bottom:10px; }
+h1 { font-size: 38px; color:#e75480; }
+h2 { font-size: 28px; }
+p { font-size: 18px; line-height:1.6; max-width:700px; margin:0 auto 20px; color:#4a3f41; font-weight:300; }
+
+.container { border-radius: 20px; background-color: #fffafa; box-shadow: 0 6px 20px rgba(0,0,0,0.06); padding:30px; animation:fadeIn 1.2s ease-out; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+.phase1 { margin-top:40px; border-radius:12px; background-color:#f5e9ff; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,0.05);}
+.secret { margin-top:40px; border-radius:12px; background-color:#ffeaf4; padding:20px; box-shadow:0 4px 12px rgba(0,0,0,0.05);}
+.secret button { background:#ff69b4; color:white; padding:10px 24px; border:none; border-radius:30px; cursor:pointer; margin:10px; font-size:16px; font-weight:500; transition:0.3s; }
+.secret button:hover { background:#ff4d94; transform:scale(1.05); }
+
+.hearts { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:0; }
+.heart { position:absolute; bottom:-20px; font-size:20px; animation:floatUp 6s linear infinite; }
+@keyframes floatUp { 0% { transform:translateY(0) scale(1); opacity:1; } 100% { transform:translateY(-120vh) scale(1.5); opacity:0; } }
+
+.photo-text { display:none; background-color:#fff3e0; width:280px; padding:10px; margin:10px auto; border-radius:10px; border:2px dashed #ff69b4; color:#4a3f41; font-size:14px; text-align:center; }
+.photo-text.show { display:block; }
+
+.card { background-color:#fff5f7; width:300px; padding:20px; margin:30px auto; border-radius:15px; text-align:center; box-shadow:0 4px 8px rgba(0,0,0,0.1); position:relative; }
+.title { color:#ff69b4; font-size:20px; margin-bottom:10px; font-family:'Georgia', serif; }
+.instruction { color:#4a4a4a; font-size:14px; margin-bottom:15px; }
+.progress-bar { width:100%; height:25px; background:#e0e0e0; border-radius:10px; overflow:hidden; margin-bottom:15px; }
+.progress.infinite { color:gold; text-shadow:0 0 8px gold,0 0 12px #ffcc00; font-size:16px; }
+#progressContainer {
+  width: 80%;
+  height: 24px;
+  background: #f8d7e6; /* light pink background */
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 20px auto;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+#progressBar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #ff69b4, #e75480); /* hot pink → rose */
+  color: white;
+  text-align: center;
+  font-size: 14px;
+  line-height: 24px;
+  border-radius: 12px;
+  transition: width 0.6s ease;
+}
+
+#progressBar.infinite {
+  background: linear-gradient(270deg, #ff69b4, #e75480, #ff69b4);
+  background-size: 400% 400%;
+  animation: shimmer 3s ease infinite;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.btn { background:#ff69b4; color:white; border:none; padding:10px 20px; border-radius:20px; cursor:pointer; font-size:14px; position:relative; overflow:visible; transition:0.3s; box-shadow:0 0 10px #ff69b4;}
+.btn:hover { background:#ff4d94; }
+
+.kiss { position:absolute; font-size:20px; opacity:0; color:#ff69b4; pointer-events:none; animation:expandFade 3s cubic-bezier(0.25,1,0.5,1) forwards; }
+@keyframes expandFade { 0% { font-size:20px; opacity:0; transform:translateY(0) translateX(0);} 20% { font-size:30px; opacity:1; transform:translateY(-10px) translateX(var(--drift));} 100% { font-size:60px; opacity:0; transform:translateY(-120px) translateX(var(--drift));} }
+
+/* Rose styling */
+#rose { font-size:44px; opacity:0; transform:scale(0.6); transition:all .45s cubic-bezier(.2,.9,.3,1); display:inline-block; margin-top:12px; }
+#rose.show { opacity:1; transform:scale(1); }
+
+/* Grid for videos (previews) */
+.photo-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:15px; margin-top:20px; }
+.photo { position:relative; border-radius:12px; overflow:hidden; cursor:pointer; box-shadow:0 6px 20px rgba(0,0,0,0.08); transition:transform 0.28s ease, box-shadow 0.28s ease; }
+.photo:hover { transform:scale(1.03); box-shadow:0 10px 30px rgba(0,0,0,0.12); }
+.photo video { width:100%; height:150px; object-fit:cover; display:block; filter: contrast(0.98) saturate(1.02); }
+.photo-hover-text { position:absolute; bottom:8px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,0.6); color:#fff; padding:6px 10px; border-radius:8px; font-size:13px; }
+
+/* Fullscreen video modal */
+.full-image-view { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); justify-content:center; align-items:center; z-index:10000; flex-direction:column; padding:28px; box-sizing:border-box; }
+.full-image-view.active { display:flex; }
+.full-image { width:100%; max-width:1100px; max-height:78vh; border-radius:12px; background:#000; }
+.cancel-button { position:absolute; top:16px; right:16px; background:#ff69b4; color:white; border:none; border-radius:50%; width:36px; height:36px; cursor:pointer; font-size:20px; }
+.image-text { color:#fff; font-size:16px; background:rgba(255,105,180,0.85); padding:8px 14px; border-radius:10px; margin-top:12px; box-shadow:0 6px 18px rgba(0,0,0,0.2); }
+
+/* Modal controls (prev/play/next) */
+.modal-controls { display:flex; gap:12px; margin-top:12px; align-items:center; justify-content:center; }
+.modal-controls button { background:rgba(255,105,180,0.95); color:#fff; border:none; padding:8px 14px; border-radius:10px; font-size:16px; cursor:pointer; }
+.modal-controls button:hover { transform:translateY(-3px); }
+
+/* small responsive tweaks */
+@media (max-width:520px) {
+  .photo video { height:120px; }
+  .full-image { max-width:95%; }
+  .modal-controls button { padding:8px 10px; font-size:14px; }
+}
+</style>
+</head>
+<body>
+<div class="hearts" aria-hidden="true"></div>
+
+<div class="container">
+  <h1>My Dearest Felicity</h1>
+
+  <div class="phase1">
+    <h2>My Beautiful Felicity 💖</h2>
+    <p>Every time you cross my mind, my chest warms with joy. You are the light that shatters my darkest hours and the melody that makes my soul dance. This letter is how I reach across the miles to keep you close. 🌹</p>
+  </div>
+
+  <div class="secret">
+    <h2>Secret Messages Just for You ✨</h2>
+    <p>Click each button to discover the thoughts I carry about you every day!</p>
+    <button onclick="showText(this,'At dawn your name rises with me; in my mind your smile is the sunrise — you make each morning impossibly beautiful, Felicity. 💕')">Morning Thought</button>
+    <button onclick="showText(this,'Your soul shines with a light all its own, Felicity. Your kindness ripples through everyone you touch — I’m profoundly grateful to know the gentle, loving person you are, inside and out. 💓')">Your Lovely Soul</button>
+    <button onclick="showText(this,'Under the moon in my dreams we dance, laughing until the stars envy us. Those moments feel so true I pray they never end. Forever you and I, Felicity.🌍')">My Dreams</button>
+    <div class="photo-text" id="photoText" role="status" aria-live="polite"></div>
+  </div>
+
+  <div class="card" style="max-width:720px;margin:20px auto;">
+    <div class="title">My Love for Felicity ❤️</div>
+    <div class="instruction">Click to see how much my heart overflows with love for you!</div>
+    <div class="progress-bar" aria-hidden="true">
+      <div class="progress" id="progressBar" style="width:0%;">0%</div>
+    </div>
+    <button class="btn" id="loveButton" onclick="fillLove()">Fill With Love for Felicity! +</button>
+  </div>
+
+  <div class="card" style="max-width:720px;margin:20px auto;">
+    <div class="title">Sending Kisses to Felicity! 💋</div>
+    <div class="instruction">Every kiss I send is filled with all my love for you, my darling.</div>
+    <button class="btn" id="kissButton">Send a Kiss 💕</button>
+  </div>
+
+  <!-- Rose card (bloom feature) -->
+  <div class="card" style="max-width:720px;margin:20px auto;">
+    <div class="title">A Rose for You 🌹</div>
+    <div class="instruction">Click bloom to grow a little rose — a tiny symbol of my love.</div>
+    <button class="btn" id="roseBtn" onclick="bloomRose()">Bloom 🌱</button>
+    <div id="rose" aria-hidden="true">🌹</div>
+  </div>
+
+  <div class="card" style="max-width:1000px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+      <div>
+        <div class="title" style="margin-bottom:4px;">Our Beautiful Memories Together 🎥</div>
+        <div class="instruction" style="margin-top:0;">Every moment with you is alive in motion. Click a video to relive it fully!</div>
+      </div>
+      <!-- Play All button -->
+      <div style="margin-left:auto;">
+        <button class="btn" onclick="playAllMemories()">Play All Memories 🎥</button>
+      </div>
+    </div>
+
+      <div class="photo" onclick="showFullVideo('vid1.MOV','AgoraHills x Princess Edit ')">
+        <video src="vid1.MOV" muted autoplay loop playsinline></video>
+        <div class="photo-hover-text">Princess Edit 🫦🫀</div>
+      </div>
+
+      <div class="photo" onclick="showFullVideo('vid2.MOV','Our sweetest coffee date ☕')">
+        <video src="vid2.MOV" muted autoplay loop playsinline></video>
+        <div class="photo-hover-text">Single ❌🫂</div>
+      </div>
+
+      <div class="photo" onclick="showFullVideo('vid3.MOV','Laughs that still echo 💕')">
+        <video src="vid3.MOV" muted autoplay loop playsinline></video>
+        <div class="photo-hover-text">First Launch 🧺🚀</div>
+      </div>
+
+      <div class="photo" onclick="showFullVideo('vid4.MOV','Our cozy night together ✨')">
+        <video src="vid4.MOV" muted autoplay loop playsinline></video>
+        <div class="photo-hover-text">Babyyy 💋👱‍♀️</div>
+      </div>
+
+      <div class="photo" onclick="showFullVideo('vid5.mp4','The seaside walk I’ll never forget 🌊')">
+        <video src="vid5.mp4" muted autoplay loop playsinline></video>
+        <div class="photo-hover-text">Me  🥹🎁</div>
+      </div>
+
+      <div class="photo" onclick="showFullVideo('vid6.mp4','Dancing under the stars 🌌')">
+        <video src="vid6.mp4" muted autoplay loop playsinline></video>
+        <div class="photo-hover-text">Mirror Pic 😫🥀</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fullscreen video viewer -->
+  <div class="full-image-view" id="fullVideoView" aria-hidden="true">
+    <button class="cancel-button" onclick="hideFullVideo()" aria-label="Close">×</button>
+    <video class="full-image" id="fullVideo" controls playsinline></video>
+    <div class="image-text" id="videoText"></div>
+
+    <!-- modal controls -->
+    <div class="modal-controls" aria-hidden="false">
+      <button id="prevBtn" aria-label="Previous" onclick="prevVideo()">◀ Prev</button>
+      <button id="playPauseBtn" aria-label="Play/Pause" onclick="togglePlayPause()">⏸</button>
+      <button id="nextBtn" aria-label="Next" onclick="nextVideo()">Next ▶</button>
+    </div>
+  </div>
+
+  <!-- Continue button to go to Page 3 -->
+  <div style="margin-top:30px;">
+    <button class="btn" id="continueBtn" onclick="window.location.href='page2.html'">Final Surprise 🎁❤️️</button>
+  </div>
+</div>
+
+<script>
+/* ================= floating hearts ================= */
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = ["❤️","💖","💕"][Math.floor(Math.random()*3)];
+  heart.style.left = Math.random()*100 + "vw";
+  heart.style.fontSize = (14 + Math.random()*26) + "px";
+  heart.style.animationDuration = (4 + Math.random()*3) + "s";
+  document.querySelector(".hearts").appendChild(heart);
+  setTimeout(()=>heart.remove(),9000);
+}
+setInterval(createHeart,650);
+
+/* ================= secret messages ================= */
+function showText(element,text){
+  const photoText=document.getElementById('photoText');
+  photoText.textContent = text;
+  photoText.classList.add('show');
+  setTimeout(()=>photoText.classList.remove('show'),5500);
+}
+
+/* ================= love progress ================= */
+let loveProgress = 0;
+function fillLove(){
+  if (loveProgress < 100) {
+    loveProgress += 20;
+    const fill = document.getElementById('progressBar');
+    fill.style.width = loveProgress + '%';
+    fill.textContent = loveProgress + '%';
+    if (loveProgress >= 100){
+      fill.textContent = 'Infinite Love';
+      fill.classList.add('infinite');
+      document.getElementById('loveButton').textContent = 'Overflowing with Love for Felicity!';
+    }
+  }
+}
+
+/* ================= kiss animation ================= */
+const kissButton = document.getElementById('kissButton');
+kissButton.addEventListener('click', function(e){
+  const rect = kissButton.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  const count = Math.floor(Math.random()*3) + 3;
+  for (let i = 0; i < count; i++) {
+    const kiss = document.createElement('span');
+    kiss.textContent = '💋';
+    kiss.classList.add('kiss');
+    kiss.style.left = x + 'px';
+    kiss.style.top = y + 'px';
+    kiss.style.setProperty('--drift', (Math.random()*140 - 70) + 'px');
+    kiss.style.animationDelay = (Math.random()*0.25) + 's';
+    kissButton.appendChild(kiss);
+    setTimeout(()=>kiss.remove(),3500);
+  }
+});
+
+/* ================= bloom rose ================= */
+function bloomRose(){
+  const rose = document.getElementById('rose');
+  rose.classList.add('show');
+  for (let i=0;i<8;i++){
+    const h = document.createElement('div');
+    h.className = 'heart';
+    h.innerHTML = ['💖','💗','💕'][Math.floor(Math.random()*3)];
+    h.style.left = (40 + Math.random()*20) + 'vw';
+    h.style.fontSize = (12 + Math.random()*30) + 'px';
+    h.style.animationDuration = (2 + Math.random()*3) + 's';
+    document.querySelector('.hearts').appendChild(h);
+    setTimeout(()=>h.remove(),3500);
+  }
+}
+
+/* ================ background audio ================ */
+const bgAudio = new Audio('ocean.mp3'); // placeholder
+bgAudio.loop = true;
+bgAudio.volume = 0.38;
+bgAudio.play().catch(()=> {
+  const hint = document.createElement('div');
+  hint.textContent = 'Tap to enable music 🎵';
+  Object.assign(hint.style, {
+    position: 'fixed', left:'50%', bottom:'18px', transform:'translateX(-50%)',
+    background:'#ff69b4', color:'#fff', padding:'8px 12px', borderRadius:'18px',
+    cursor:'pointer', boxShadow:'0 6px 20px rgba(0,0,0,0.15)', zIndex:9999
+  });
+  document.body.appendChild(hint);
+  const handler = () => {
+    bgAudio.play().catch(()=>{});
+    hint.remove();
+    document.body.removeEventListener('click', handler);
+  };
+  document.body.addEventListener('click', handler);
+});
+
+/* ================= full-video modal & play-all ================= */
+const fullVideoView = document.getElementById('fullVideoView');
+const fullVideo = document.getElementById('fullVideo');
+const videoText = document.getElementById('videoText');
+const playPauseBtn = document.getElementById('playPauseBtn');
+
+let playAllList = [
+  { src: 'vid1.MOV', caption: 'AgoraHills x Princess' },
+  { src: 'vid2.MOV', caption: 'im not single' },
+  { src: 'vid3.MOV', caption: 'Soft Launch 💕' },
+  { src: 'vid4.MOV', caption: 'Taking Pictures ✨' },
+  { src: 'vid5.mp4', caption: 'Just me 🌊' },
+  { src: 'vid6.mp4', caption: 'My handsome Face🌌' }
+];
+
+let isPlayingSequence = false;
+let currentIndex = -1;
+let audioWasPlayingBeforeVideo = false;
+
+function openModalAndPlay(index) {
+  const item = playAllList[index];
+  if (!item) return;
+
+  audioWasPlayingBeforeVideo = !bgAudio.paused && !bgAudio.ended;
+  if (audioWasPlayingBeforeVideo) bgAudio.pause();
+
+  fullVideo.src = item.src;
+  videoText.textContent = item.caption;
+  fullVideoView.classList.add('active');
+  fullVideoView.setAttribute('aria-hidden','false');
+  playPauseBtn.textContent = '⏸';
+  fullVideo.play().catch(()=>{});
+
+  currentIndex = index;
+
+  fullVideo.onended = () => {
+    if (isPlayingSequence) {
+      currentIndex++;
+      if (currentIndex < playAllList.length) {
+        openModalAndPlay(currentIndex);
+      } else {
+        hideFullVideo();
+      }
+    }
+  };
+}
+
+function showFullVideo(src, caption) {
+  isPlayingSequence = false;
+  const idx = playAllList.findIndex(v => v.src === src);
+  openModalAndPlay(idx >= 0 ? idx : 0);
+}
+
+function playAllMemories() {
+  isPlayingSequence = true;
+  openModalAndPlay(0);
+}
+
+function hideFullVideo() {
+  fullVideo.pause();
+  fullVideo.src = '';
+  fullVideoView.classList.remove('active');
+  fullVideoView.setAttribute('aria-hidden','true');
+  if (audioWasPlayingBeforeVideo) {
+    bgAudio.play().catch(()=>{});
+  }
+  isPlayingSequence = false;
+  currentIndex = -1;
+}
+
+function nextVideo() {
+  if (currentIndex === -1) return;
+  currentIndex = (currentIndex + 1) % playAllList.length;
+  openModalAndPlay(currentIndex);
+}
+function prevVideo() {
+  if (currentIndex === -1) return;
+  currentIndex = (currentIndex - 1 + playAllList.length) % playAllList.length;
+  openModalAndPlay(currentIndex);
+}
+function togglePlayPause() {
+  if (fullVideo.paused) {
+    fullVideo.play().catch(()=>{});
+    playPauseBtn.textContent = '⏸';
+  } else {
+    fullVideo.pause();
+    playPauseBtn.textContent = '▶️';
+  }
+}
+
+/* close on Esc */
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && fullVideoView.classList.contains('active')) hideFullVideo();
+});
+fullVideoView.addEventListener('click', (e) => {
+  if (e.target === fullVideoView) hideFullVideo();
+});
+
+/* fade-in continue btn */
+setTimeout(() => {
+  const continueBtn = document.getElementById('continueBtn');
+  if (continueBtn) {
+    continueBtn.style.opacity = 1;
+    continueBtn.style.transition = 'opacity 1s ease';
+  }
+}, 1200);
+</script>
+
+</body>
+</html>

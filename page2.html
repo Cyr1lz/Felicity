@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forever Yours, Felicity 💘</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #ffe6f0, #fffbe6);
+  text-align: center;
+  color: #4a3f41;
+  overflow: hidden;
+  padding: 40px 20px;
+}
+
+h1 {
+  font-family: 'Dancing Script', cursive;
+  font-size: 42px;
+  color: #e75480;
+  margin-bottom: 20px;
+  opacity: 0;
+  animation: fadeIn 2s forwards;
+}
+
+.message-line {
+  font-family: 'Dancing Script', cursive;
+  font-size: 26px;
+  color: #e08ab5;
+  margin: 15px 0;
+  opacity: 0;
+  animation: fadeIn 2s forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hearts {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+.heart {
+  position: absolute;
+  bottom: -20px;
+  font-size: 20px;
+  animation: floatUp 8s linear infinite;
+  color: #ff69b4;
+}
+@keyframes floatUp {
+  0% { transform: translateY(0) scale(1); opacity: 1; }
+  100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
+}
+
+.btn {
+  margin-top: 40px;
+  padding: 12px 28px;
+  background: #ff69b4;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s;
+  z-index: 2;
+  position: relative;
+}
+.btn:hover { background: #ff4d94; transform: scale(1.05); }
+</style>
+</head>
+<body>
+
+<div class="hearts"></div>
+
+<h1>Forever Yours, He 💘</h1>
+<div id="message"></div>
+
+<button class="btn" onclick="window.location.href='page.html'">Back to the Beginning 💌</button>
+
+<script>
+// Floating hearts
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "💖";
+  heart.style.left = Math.random()*100 + "vw";
+  heart.style.fontSize = (15 + Math.random()*25) + "px";
+  heart.style.animationDuration = (6 + Math.random()*4) + "s";
+  document.querySelector(".hearts").appendChild(heart);
+  setTimeout(() => heart.remove(), 10000);
+}
+setInterval(createHeart, 700);
+
+// Romantic message lines
+const lines = [
+  "Every beat of my heart whispers your name 💓",
+  "Every dream I see carries your smile 🌙",
+  "With you, Felicity, forever feels too short ⏳",
+  "My love for you has no end — only beginnings 💍"
+];
+
+const messageDiv = document.getElementById("message");
+lines.forEach((line, index) => {
+  const p = document.createElement("p");
+  p.className = "message-line";
+  p.style.animationDelay = `${(index+1)*2.5}s`;
+  p.textContent = line;
+  messageDiv.appendChild(p);
+});
+
+// Background music
+const audio = new Audio("ocean.mp3");
+audio.loop = true;
+audio.volume = 0.9;
+audio.play().catch(() => {
+  document.body.addEventListener("click", () => audio.play(), { once: true });
+});
+</script>
+
+</body>
+</html>
